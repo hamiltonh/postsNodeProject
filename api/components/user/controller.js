@@ -1,4 +1,6 @@
 // const store = require('../../../store/dummy')
+const { nanoid }  = require('nanoid')
+const auth = require ('../auth')
 const TABLA = 'user'
 
 // La idea es utilizar la capa de store para todos los componentes, o permitir especificar uno
@@ -14,16 +16,26 @@ module.exports = function(injectedStore){
         return store.get(TABLA, id)
     }
 
-    function upsert(body, id){
+    async function upsert(body, id){
 
         const user = {
-            id: parseInt(id),
-            name: body.name
+            id: id  || nanoid(5),
+            name: body.name,
         }
+
+        if(body.password  || body.username){
+            await auth.upsert({
+                id:user.id,
+                username: body.username,
+                password: body.password,
+            })
+        }
+
         return store.upsert(TABLA, user)
     }
 
     function remove(id){
+        // console.log(id)
         return store.remove(TABLA, id)
     }
 

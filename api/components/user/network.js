@@ -22,7 +22,7 @@ function list(req, res){
 
 function get(req, res){
     
-    controller.get(parseInt( req.params.id ))
+    controller.get(( req.params.id ))
        .then((user) => {
             response.success(req, res, 200, user)
        }).catch((err) => {
@@ -33,7 +33,7 @@ function get(req, res){
 async function upsert(req, res){
 
     try {
-        const user = await controller.upsert( req.body, req.params.id || null)
+        const user = await controller.upsert( req.body, req.params.id )
         response.success(req, res, 201, user)
     } catch(error) {
         response.success(req, res, 500, error.message)
