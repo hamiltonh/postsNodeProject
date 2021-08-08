@@ -3,7 +3,7 @@ const router = express.Router() //No es necesario, pero por especifidad router p
 const response = require('../../../network/response')
 const controller = require('./index')
 
-router.get('/login', (req, res)=>{
+router.post('/login', (req, res)=>{
     controller.login(req.body.username, req.body.password)
         .then(token => {
             response.success(req, res, 200, token)

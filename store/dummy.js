@@ -2,8 +2,8 @@ const user = require('../api/components/user')
 
 const db = {
     user:[
-        {name:'hamilton', id:'1'},
-        {name:'nicolas', id:'2'},
+        {id:'1', name:'hamilton'},
+        {id:'2', name:'nicolas'},
     ]
 }
 
@@ -20,7 +20,7 @@ async function get(tabla, id){
 async function upsert(tabla, element){
 
     if(!db[tabla]){
-        db[tabla]=[]
+        db[tabla] = []
     }
 
     if (element.id){

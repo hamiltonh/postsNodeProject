@@ -1,9 +1,8 @@
-const { nanoid } = require('nanoid');
-const auth = require('../../../auth')
-const user = require('../user');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
+const auth = require('../../../auth')
 const TABLA = 'auth'
+
 // La idea es utilizar la capa de store para todos los componentes, o permitir especificar uno
 module.exports = function(injectedStore){
     
@@ -14,9 +13,9 @@ module.exports = function(injectedStore){
         // console.log('Data::::',data)
         return bcrypt.compare(password, data.password)//Compare fn return boolean
                 .then( isValid =>{
-
                     if(isValid){
-                        delete data.password//DO not include the password int the payload
+                        delete data.password //DO not include the password int the payload
+                        // Gen token
                         return auth.signToken(data) 
                     }
                     else
@@ -25,7 +24,8 @@ module.exports = function(injectedStore){
     }
 
     async function upsert(data){
-        
+
+        const saltRounds = 5     
         const authData = {
             id: data.id,
         }
@@ -34,7 +34,7 @@ module.exports = function(injectedStore){
             authData.username = data.username
         }
         if(data.password){  
-            authData.password = await bcrypt.hash(data.password, 5)//data.password
+            authData.password = await bcrypt.hash(data.password, saltRounds)//data.password
         }   
 
         return store.upsert(TABLA, authData)
@@ -44,4 +44,4 @@ module.exports = function(injectedStore){
         upsert,
         login,
     }
-};
+}

@@ -7,7 +7,6 @@ const TABLA = 'user'
 module.exports = function(injectedStore){
     
     let store = injectedStore || require('../../../store/dummy')
-
     function list(){
         return store.list(TABLA)
     }
@@ -21,6 +20,7 @@ module.exports = function(injectedStore){
         const user = {
             id: id  || nanoid(5),
             name: body.name,
+            // username: body.username,
         }
 
         if(body.password  || body.username){

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router() //No es necesario, pero por especifidad router por optimizacion.
+const secure = require('./secure')
 const response = require('../../../network/response')
 const controller = require('./index')
 
@@ -7,7 +8,7 @@ const controller = require('./index')
 router.get('/', list)
 router.get('/:id', get)
 router.post('/', upsert)
-router.put('/:id', upsert)
+router.put('/:id', secure('update'), upsert)
 router.delete('/:id', remove)
 
 function list(req, res){
@@ -31,7 +32,6 @@ function get(req, res){
 }
 
 async function upsert(req, res){
-
     try {
         const user = await controller.upsert( req.body, req.params.id )
         response.success(req, res, 201, user)
