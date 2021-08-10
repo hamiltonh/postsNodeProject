@@ -14,13 +14,16 @@ function verify(token) {
 const check = {
     own: function(req, ownerId){
         const decoded = decodeHeader(req)
-        console.log(decoded)
+        console.log('Decoded pass from DB.', decoded)
 
         if(decoded.id !== ownerId){
             // throw new Error('You do not have permission for do that!')
-            throw error('You do not have permission for do that!', 401 )
+            throw error('You do not have permission for do that!', 401 )// Calling the custom middleware errors
         }
-    }   
+    },
+    logged: function (req){
+        const decoded = decodeHeader(req)
+    }
 }
 
 function getToken(auth) {
@@ -41,9 +44,11 @@ function decodeHeader(req) {
         const authorization = req.headers.authorization || ''
         const token = getToken(authorization)
         const decoded = verify(token)
-        req.user = decoded
+        
+        req.user = decoded //important!
 
         return decoded
+
     } catch (err) {
         throw new Error('Error decoding. ', err)
     }

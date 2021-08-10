@@ -10,13 +10,14 @@ module.exports = function(injectedStore){
 
     async function login(username, password){
         const data = await store.query(TABLA, { username })
-        // console.log('Data::::',data)
+        console.log('Data::::',data)
         return bcrypt.compare(password, data.password)//Compare fn return boolean
                 .then( isValid =>{
                     if(isValid){
                         delete data.password //DO not include the password int the payload
                         // Gen token
-                        return auth.signToken(data) 
+                        // return auth.signToken( data )
+                        return auth.signToken({...data}) //Debido a error RowDataPacket del obj se modif. {...data}
                     }
                     else
                         throw new Error('Invalid information!')

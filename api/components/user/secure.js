@@ -9,6 +9,11 @@ module.exports = function checkAuth (action){
                 auth.check.own(req, ownerId) 
                 next() //Continuar procesando la fn donde se encuentra el middlware
                 break
+
+            case 'follow':
+                auth.check.logged(req) 
+                next() //Continuar procesando la fn donde se encuentra el middlware
+                break
                 
             default:
                 next()

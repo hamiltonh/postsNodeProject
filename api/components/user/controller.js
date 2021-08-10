@@ -20,7 +20,7 @@ module.exports = function(injectedStore){
         const user = {
             id: id  || nanoid(5),
             name: body.name,
-            // username: body.username,
+            username: body.username,
         }
 
         if(body.password  || body.username){
@@ -39,11 +39,33 @@ module.exports = function(injectedStore){
         return store.remove(TABLA, id)
     }
 
+    function follow(from, to) {
+        return store.upsert(TABLA + '_follow', {
+            user_from: from,
+            user_to: to,
+        });
+    }
+
+    // function following(from) {
+    //     return store.following(TABLA + '_follow', user_from);
+    // }
+    
+    // Revisar detenidamente esta fn
+    async function following(user) {
+        const join = {}
+        join[TABLA] = 'user_to'; // { user: 'user_to' }
+        const query = { user_from: user };
+		
+		return await store.query(TABLA + '_follow', query, join);
+	}
+
     return {
         list,
         get,
         upsert,
         remove,
+        follow,
+        following,
     }
 }
 
