@@ -7,6 +7,8 @@ express
 JWT, jsonwebtoken
 bcrypt
 nanoid
+request: peticiones http mas sencillas
+
 custom manage error with THROW
 Middlewares and next() functions
 https://remotemysql.com/
