@@ -16,9 +16,9 @@ module.exports = {
 
 /*
 Username: kvSXg2ZlUs
-
 Database name: kvSXg2ZlUs
 
+EMAIL: hamiltonhl@outlook.com
 Password: R5YXC33fRw
 
 Server: remotemysql.com

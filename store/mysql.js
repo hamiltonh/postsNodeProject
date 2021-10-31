@@ -69,6 +69,38 @@ async function upsert(table, payload) {
     })
 }
 
+// Solucion SIN PROBAR para construir el upsert. Crear Insert y update independientes. Establecer la logica en el upsert.
+/*
+function insert(table, data) {
+    return new Promise((resolve, reject) => {
+        console.log(`INSERT INTO ${table} SET ?`, data)
+        connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+}
+
+function update(table, data) {
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data, data.id], (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+}
+
+async function upsert(table, data) {
+    const result = await get(table,data.id);
+    if(result.length <1 ) {
+        return insert(table, data);
+    } else {
+        return update(table, data);
+    }
+}
+*/
+
+
 function remove(table, id) {
     return new Promise( (resolve, reject) => {
         connection.query(`DELETE FROM ${table} WHERE id = '${id}' LIMIT 1`, (err, rst) => {
@@ -77,15 +109,6 @@ function remove(table, id) {
         })
     })
 }
-
-// function query(table, query){
-//     return new Promise((resolve, reject) => {
-//         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) =>{
-//             if(err) return reject(err)
-//             else resolve(res[0] || null)
-//         })
-//     });
-// }
 
 function query(table, query, join) {
     let joinQuery = '';
