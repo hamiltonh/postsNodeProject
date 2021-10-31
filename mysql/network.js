@@ -15,15 +15,17 @@ async function list(req, res, next){
 
 async function get(req, res, next){
     const data = await Store.get(req.params.table, req.params.id)
+    response.success(req, res, 200, data)
 }
 
 async function insert(req, res, next){
     const data = await Store.insert(req.params.table, req.body)
+    response.success(req, res, 200, data)
 }
 
 async function upsert(req, res, next){
     const data = await Store.upsert(req.params.table, req.body)
+    response.success(req, res, 200, data)
 }
-
 
 module.exports = router
