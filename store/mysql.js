@@ -110,6 +110,7 @@ function remove(table, id) {
     })
 }
 
+// Importante como mysql procesa las condiciones con el objeto query
 function query(table, query, join) {
     let joinQuery = '';
     if (join) {
@@ -119,18 +120,12 @@ function query(table, query, join) {
     }
 
     return new Promise((resolve, reject) => {
+        console.log(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}`);
+        console.log('query condition:', query);
         connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {
             if (err) return reject(err)
-            resolve(res[0] || null)
-        })
-    })
-}
-
-function following(table, id) {
-    return new Promise( (resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE user_to = '${id}'`, (err, rst) => {
-            if (err) return reject(err)
-            else resolve(rst);
+            join ? resolve(res || null) : resolve(res[0] || null) // Para soportar listas y para que no se rompa el login
+        
         })
     })
 }
@@ -141,5 +136,4 @@ module.exports = {
     upsert,
     query,
     remove,
-    following,
 }

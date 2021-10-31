@@ -8,7 +8,6 @@ const controller = require('./index')
 router.get('/', list)
 router.get('/:id', get)
 router.get('/:id/following', following)
-
 router.post('/', upsert)
 router.post('/follow/:id', secure('follow'), follow)
 router.put('/:id', secure('update'), upsert)
@@ -74,7 +73,7 @@ function following(req, res, next) {
    
     controller.following(req.params.id)
         .then(data => {
-            response.success(req, res, 201, data);
+            response.success(req, res, 200, data);
         })
         .catch(next);
 }

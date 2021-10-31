@@ -46,15 +46,12 @@ module.exports = function(injectedStore){
         });
     }
 
-    // function following(from) {
-    //     return store.following(TABLA + '_follow', user_from);
-    // }
-    
-    // Revisar detenidamente esta fn
-    async function following(user) {
+    // Listar a quien se sigue
+    //obs join y query como objeto.
+    async function following(id) {
         const join = {}
         join[TABLA] = 'user_to'; // { user: 'user_to' }
-        const query = { user_from: user };
+        const query = { user_from: id };
 		
 		return await store.query(TABLA + '_follow', query, join);
 	}

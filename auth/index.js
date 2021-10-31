@@ -45,7 +45,7 @@ function decodeHeader(req) {
         const token = getToken(authorization)
         const decoded = verify(token)
         
-        req.user = decoded //important!
+        req.user = decoded //important!. Get payload
 
         return decoded
 
