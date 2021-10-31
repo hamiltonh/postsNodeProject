@@ -49,7 +49,7 @@ CREATE TABLE  user_follow(
 CREATE TABLE  post(
   id  VARCHAR(32),
   text  VARCHAR(4000),
-  user  VARCHAR(32),
+  user_id  VARCHAR(32),
   PRIMARY KEY (id)
 );
 
