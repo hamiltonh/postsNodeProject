@@ -58,13 +58,19 @@ async function upsert(table, payload) {
      1 if the row is inserted as a new row,
      2 if an existing row is updated, and 0 if an existing row is set to its current values
     */ 
+
+    console.log('-4 mysql.js', table, payload);
+
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`, [payload, payload], (error, rst) => {
-            console.log(`result upsert table:[${table}], affectedRows:`, rst.affectedRows, payload);
             if (error) {
-                return reject(error)
+                console.error('Error::::::', error.message, 'table:', table, '-payload:',  payload)
+                return reject(new Error(error.message))
             }
-            else resolve(rst)
+            else {
+                console.log(`result upsert table:[${table}], affectedRows:`, rst.affectedRows, payload)
+                resolve(rst)
+            }
         })
     })
 }

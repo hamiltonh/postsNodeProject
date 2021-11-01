@@ -38,13 +38,15 @@ function get(req, res, next){
 }
 
 async function upsert(req, res, next){
+    // console.log('-1 network.js', "param.id:" , req.params.id);
     try {
         const user = await controller.upsert( req.body, req.params.id )
         response.success(req, res, 201, user)
     } 
     catch(error) {
+        console.error('Error >>>> ', error)
         // response.success(req, res, 500, error.message)
-        next()
+        next(error)
     }
 }
 
@@ -56,7 +58,7 @@ async function remove(req, res, next){
     } 
     catch(error) {
         // response.success(req, res, 500, error.message)
-        next()
+        next(error)
     }
 }
 
