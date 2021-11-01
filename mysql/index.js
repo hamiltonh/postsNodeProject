@@ -1,4 +1,4 @@
-// Este es un ejemplo de un microservicio privado con MYSQL
+// Este es un ejemplo de un microservicio de datos privado con MYSQL, Ruta http://localhost:3001/user
 const express = require('express')
 const app = express()
 app.use(express.json())

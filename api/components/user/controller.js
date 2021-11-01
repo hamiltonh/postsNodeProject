@@ -1,4 +1,3 @@
-// const store = require('../../../store/dummy')
 const { nanoid }  = require('nanoid')
 const auth = require ('../auth')
 const TABLA = 'user'
@@ -16,7 +15,8 @@ module.exports = function(injectedStore){
     }
 
     async function upsert(body, id){
-
+        
+        console.log('-2 controller.js')
         const user = {
             id: id  || nanoid(5),
             name: body.name,
@@ -30,12 +30,11 @@ module.exports = function(injectedStore){
                 password: body.password,
             })
         }
-
         return store.upsert(TABLA, user)
     }
 
     function remove(id){
-        // console.log(id)
+        console.log('remove controller.js', id);
         return store.remove(TABLA, id)
     }
 
@@ -46,8 +45,7 @@ module.exports = function(injectedStore){
         });
     }
 
-    // Listar a quien se sigue
-    //obs join y query como objeto.
+    // Listar a quien se sigue. obs join y query como objeto.
     async function following(id) {
         const join = {}
         join[TABLA] = 'user_to'; // { user: 'user_to' }
@@ -65,9 +63,3 @@ module.exports = function(injectedStore){
         following,
     }
 }
-
-
-// Lo exporta como un obj:
-// module.exports = {
-//     list,
-// }
