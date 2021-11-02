@@ -54,4 +54,3 @@ CREATE TABLE  post(
   user_id  VARCHAR(32),
   PRIMARY KEY (id)
 );
-
